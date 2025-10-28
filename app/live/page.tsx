@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Navbar from '@/components/Navbar';
+import MainLayout from '@/components/MainLayout';
 import DepthChart from '@/components/charts/DepthChart';
 import Sparkline from '@/components/charts/Sparkline';
 import LiveCandlesCard from '@/components/charts/LiveCandlesCard';
@@ -30,8 +30,7 @@ export default function LivePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      <Navbar />
+    <MainLayout>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">Live Market</h1>
 
@@ -67,7 +66,7 @@ export default function LivePage() {
           <DepthChart bids={[{ price: 2500, quantity: 100 }, { price: 2495, quantity: 250 }]} asks={[{ price: 2510, quantity: 120 }, { price: 2515, quantity: 200 }]} />
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }
 

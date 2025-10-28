@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import Navbar from '@/components/Navbar';
+import MainLayout from '@/components/MainLayout';
 import { DataGrid } from '@/components/DataGrid';
 import type { ColDef } from 'ag-grid-community';
 
@@ -92,18 +92,17 @@ export default function MutualFundsPage() {
 
   // Calculate total investment and current value
   const stats = useMemo(() => {
-    const totalInvested = holdings.reduce((sum, h) => sum + (h.average_price * h.quantity), 0);
-    const currentValue = holdings.reduce((sum, h) => sum + (h.last_price * h.quantity), 0);
-    const totalPnL = holdings.reduce((sum, h) => sum + (h.pnl || 0), 0);
-    const activeSips = sips.filter((s: any) => s.status === 'ACTIVE').length;
-    const totalSipAmount = sips.filter((s: any) => s.status === 'ACTIVE').reduce((sum: number, s: any) => sum + (s.instalment_amount || s.installment_amount || 0), 0);
+    const totalInvested = (holdings || []).reduce((sum, h) => sum + (h.average_price * h.quantity), 0);
+    const currentValue = (holdings || []).reduce((sum, h) => sum + (h.last_price * h.quantity), 0);
+    const totalPnL = (holdings || []).reduce((sum, h) => sum + (h.pnl || 0), 0);
+    const activeSips = (sips || []).filter((s: any) => s.status === 'ACTIVE').length;
+    const totalSipAmount = (sips || []).filter((s: any) => s.status === 'ACTIVE').reduce((sum: number, s: any) => sum + (s.instalment_amount || s.installment_amount || 0), 0);
     
     return { totalInvested, currentValue, totalPnL, activeSips, totalSipAmount };
   }, [holdings, sips]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 dark:from-black dark:via-purple-950/20 dark:to-black">
-      <Navbar />
+    <MainLayout>
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -168,10 +167,10 @@ export default function MutualFundsPage() {
             <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold text-slate-800 dark:text-white">📈 Holdings</h2>
-                <div className="text-sm text-slate-600 dark:text-slate-400">{holdings.length} funds</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">{(holdings || []).length} funds</div>
               </div>
               <DataGrid<any>
-                rowData={holdings}
+                rowData={holdings || []}
                 columnDefs={holdingsColumns}
                 hasMore={false}
                 height={400}
@@ -183,10 +182,10 @@ export default function MutualFundsPage() {
             <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold text-slate-800 dark:text-white">🔄 Systematic Investment Plans</h2>
-                <div className="text-sm text-slate-600 dark:text-slate-400">{sips.length} SIPs</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">{(sips || []).length} SIPs</div>
               </div>
               <DataGrid<any>
-                rowData={sips}
+                rowData={sips || []}
                 columnDefs={sipsColumns}
                 hasMore={false}
                 height={300}
@@ -198,10 +197,10 @@ export default function MutualFundsPage() {
             <section className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold text-slate-800 dark:text-white">📋 Recent Orders</h2>
-                <div className="text-sm text-slate-600 dark:text-slate-400">{orders.length} orders (last 7 days)</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400">{(orders || []).length} orders (last 7 days)</div>
               </div>
               <DataGrid<any>
-                rowData={orders}
+                rowData={orders || []}
                 columnDefs={ordersColumns}
                 hasMore={false}
                 height={300}
@@ -211,7 +210,7 @@ export default function MutualFundsPage() {
           </div>
         )}
       </div>
-    </div>
+    </MainLayout>
   );
 }
 

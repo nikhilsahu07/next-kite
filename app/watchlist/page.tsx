@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Navbar from '@/components/Navbar';
+import MainLayout from '@/components/MainLayout';
 import InstrumentSearch from '@/components/InstrumentSearch';
 
 interface WatchItem {
@@ -34,8 +34,7 @@ export default function WatchlistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      <Navbar />
+    <MainLayout>
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Watchlist</h1>
@@ -98,6 +97,6 @@ export default function WatchlistPage() {
           </table>
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }

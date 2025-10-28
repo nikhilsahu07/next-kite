@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
-import Navbar from '@/components/Navbar';
+import MainLayout from '@/components/MainLayout';
 import FinancialCandlestickChart from '@/components/charts/FinancialCandlestickChart';
 
 interface CandleData {
@@ -222,36 +222,32 @@ export default function NiftyPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black">
-        <Navbar />
+      <MainLayout>
         <div className="flex items-center justify-center h-[calc(100vh-4rem)]">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-lg text-black/60 dark:text-white/60">Loading Nifty 50 Historical Data...</p>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-gray-900 dark:border-gray-100 mx-auto mb-4"></div>
+            <p className="text-lg text-gray-600 dark:text-gray-400">Loading Nifty 50 Historical Data...</p>
           </div>
         </div>
-      </div>
+      </MainLayout>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black">
-        <Navbar />
+      <MainLayout>
         <div className="container mx-auto px-4 py-8">
-          <div className="border border-red-500 rounded-lg p-6 bg-red-50 dark:bg-red-950/20">
-            <h2 className="text-xl font-bold text-red-600 mb-2">Error Loading Data</h2>
-            <p className="text-red-600">{error}</p>
+          <div className="border border-red-200 dark:border-red-800 rounded-lg p-6 bg-red-50 dark:bg-red-900/20">
+            <h2 className="text-xl font-bold text-red-600 dark:text-red-400 mb-2">Error Loading Data</h2>
+            <p className="text-red-600 dark:text-red-400">{error}</p>
           </div>
         </div>
-      </div>
+      </MainLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      <Navbar />
-      
+    <MainLayout>
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
         <div className="mb-6">
@@ -528,7 +524,7 @@ export default function NiftyPage() {
           </div>
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }
 

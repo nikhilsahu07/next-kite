@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
+import MainLayout from '@/components/MainLayout';
 import TickerDisplay from '@/components/TickerDisplay';
 import NiftyQuickAccess from '@/components/NiftyQuickAccess';
 import { KiteProfile, Margins } from '@/types/kite';
@@ -59,36 +59,33 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black">
-        <Navbar />
+      <MainLayout>
         <div className="flex items-center justify-center h-[calc(100vh-4rem)]">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black dark:border-white mx-auto mb-4"></div>
-            <p className="text-black/60 dark:text-white/60">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 dark:border-gray-100 mx-auto mb-4"></div>
+            <p className="text-gray-600 dark:text-gray-400">
               Loading dashboard...
             </p>
           </div>
         </div>
-      </div>
+      </MainLayout>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black">
-        <Navbar />
+      <MainLayout>
         <div className="container mx-auto px-4 py-8">
-          <div className="border border-black/10 dark:border-white/10 rounded-lg p-4 text-red-600">
+          <div className="border border-red-200 dark:border-red-800 rounded-lg p-4 text-red-600 dark:text-red-400">
             {error}
           </div>
         </div>
-      </div>
+      </MainLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      <Navbar />
+    <MainLayout>
       <div className="container mx-auto px-4 py-8">
         {/* Profile Section */}
         {profile && (
@@ -289,6 +286,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }

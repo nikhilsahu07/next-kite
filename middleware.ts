@@ -5,8 +5,10 @@ export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('kite_access_token')?.value;
   const envAccessToken = process.env.KITE_ACCESS_TOKEN;
   
-  // Allow public access to Nifty chart page
-  if (request.nextUrl.pathname.startsWith('/nifty')) {
+  // Allow public access to landing and Nifty chart pages
+  if (request.nextUrl.pathname.startsWith('/landing') ||
+      request.nextUrl.pathname.startsWith('/nifty') ||
+      request.nextUrl.pathname === '/') {
     return NextResponse.next();
   }
   

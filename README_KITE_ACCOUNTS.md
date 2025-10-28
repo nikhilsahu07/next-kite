@@ -24,7 +24,7 @@ A comprehensive system for managing multiple Kite trading accounts with secure c
 ```
 Next.js Frontend (localhost:3000)
          ↓
-   brmh.in Backend API (https://brmh.in)
+   xyz.in Backend API (https://xyz.in)
          ↓
     DynamoDB Tables
     ├── kite-accounts
@@ -42,11 +42,11 @@ Next.js Frontend (localhost:3000)
 
 ### Frontend (.env.local)
 ```bash
-NEXT_PUBLIC_BACKEND_URL=https://brmh.in
+NEXT_PUBLIC_BACKEND_URL=https://xyz.in
 ```
 
-### Backend (brmh.in)
-- All backend configuration is handled by brmh.in
+### Backend (xyz.in)
+- All backend configuration is handled by xyz.in
 - No local setup required
 
 ## ✨ Features
@@ -68,15 +68,15 @@ NEXT_PUBLIC_BACKEND_URL=https://brmh.in
 ## 🚨 Troubleshooting
 
 ### "Network Error" or "Connection Refused"
-- Ensure brmh.in backend is running and accessible
-- Check that `NEXT_PUBLIC_BACKEND_URL=https://brmh.in` in `.env.local`
+- Ensure xyz.in backend is running and accessible
+- Check that `NEXT_PUBLIC_BACKEND_URL=https://xyz.in` in `.env.local`
 
 ### "Table not found"
-- Tables are managed by the brmh.in backend
+- Tables are managed by the xyz.in backend
 - No local DynamoDB setup required
 
 ### "Encryption key missing"
-- Backend encryption is handled by brmh.in
+- Backend encryption is handled by xyz.in
 - No local configuration needed
 
 ## 🎯 Usage

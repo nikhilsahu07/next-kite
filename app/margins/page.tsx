@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Navbar from '@/components/Navbar';
+import MainLayout from '@/components/MainLayout';
 
 interface OrderInput {
   exchange: string;
@@ -91,9 +91,7 @@ export default function MarginsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-black dark:to-slate-900">
-      <Navbar />
-      
+    <MainLayout>
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
@@ -369,7 +367,7 @@ export default function MarginsPage() {
           </div>
         )}
       </div>
-    </div>
+    </MainLayout>
   );
 }
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import Navbar from '@/components/Navbar';
+import MainLayout from '@/components/MainLayout';
 import InstrumentSearch from '@/components/InstrumentSearch';
 import MainChart from '@/components/charts/MainChart';
 import dayjs from 'dayjs';
@@ -56,8 +56,7 @@ export default function HistoricalPage() {
   }, [symbol, interval, from, to]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      <Navbar />
+    <MainLayout>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">Historical Data</h1>
         <div className="grid md:grid-cols-4 gap-4 mb-4">
@@ -92,7 +91,7 @@ export default function HistoricalPage() {
           )}
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }
 

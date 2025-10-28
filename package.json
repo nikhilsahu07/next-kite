@@ -22,6 +22,8 @@
     "dayjs": "^1.11.18",
     "echarts": "^5.6.0",
     "echarts-for-react": "^3.0.2",
+    "framer-motion": "^12.23.24",
+    "gsap": "^3.13.0",
     "kiteconnect": "^5.1.0",
     "lightweight-charts": "^5.0.9",
     "lucide-react": "^0.545.0",
@@ -32,6 +34,7 @@
     "react-dom": "19.1.0",
     "react-financial-charts": "^2.0.1",
     "react-uplot": "^0.0.9",
+    "recharts": "^3.3.0",
     "tailwind-merge": "^3.3.1",
     "uplot": "^1.6.32"
   },

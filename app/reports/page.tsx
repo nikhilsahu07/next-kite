@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Navbar from '@/components/Navbar';
+import MainLayout from '@/components/MainLayout';
 
 export default function ReportsPage() {
   const [data, setData] = useState<any>(null);
@@ -23,8 +23,7 @@ export default function ReportsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      <Navbar />
+    <MainLayout>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">Reports</h1>
         {error && <div className="text-red-600 mb-2">{error}</div>}
@@ -106,7 +105,7 @@ export default function ReportsPage() {
           )
         )}
       </div>
-    </div>
+    </MainLayout>
   );
 }
 
