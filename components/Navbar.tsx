@@ -37,6 +37,9 @@ export default function Navbar() {
             <Link href="/accounts" className="hover:underline">
               Accounts
             </Link>
+            <Link href="/kite-accounts" className="hover:underline font-medium text-indigo-600 dark:text-indigo-400">
+              Kite Accounts
+            </Link>
             <Link href="/positions" className="hover:underline">
               Positions
             </Link>
