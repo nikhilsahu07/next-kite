@@ -3,9 +3,14 @@ import { getMFSIPs, placeMFSIP, modifyMFSIP, cancelMFSIP } from '@/lib/kite-serv
 
 export async function GET(request: NextRequest) {
   const accessToken = request.cookies.get('kite_access_token')?.value;
-  if (!accessToken) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  const apiKey = request.cookies.get('kite_api_key')?.value;
+  
+  if (!accessToken || !apiKey) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+  
   try {
-    const data = await getMFSIPs(accessToken);
+    const data = await getMFSIPs(accessToken, apiKey);
     // Sanitize data to ensure JSON serialization
     const sanitizedData = JSON.parse(JSON.stringify(data, (key, value) => {
       // Convert Date objects to ISO strings
@@ -27,10 +32,15 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const accessToken = request.cookies.get('kite_access_token')?.value;
-  if (!accessToken) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  const apiKey = request.cookies.get('kite_api_key')?.value;
+  
+  if (!accessToken || !apiKey) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+  
   try {
     const body = await request.json();
-    const data = await placeMFSIP(accessToken, body);
+    const data = await placeMFSIP(accessToken, body, apiKey);
     return NextResponse.json(data);
   } catch (e:any) {
     return NextResponse.json({ error: e?.message || 'Failed to place MF SIP' }, { status: 500 });
@@ -39,12 +49,17 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   const accessToken = request.cookies.get('kite_access_token')?.value;
-  if (!accessToken) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  const apiKey = request.cookies.get('kite_api_key')?.value;
+  
+  if (!accessToken || !apiKey) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+  
   try {
     const body = await request.json();
     const { sip_id, ...params } = body || {};
     if (!sip_id) return NextResponse.json({ error: 'sip_id required' }, { status: 400 });
-    const data = await modifyMFSIP(accessToken, sip_id, params);
+    const data = await modifyMFSIP(accessToken, sip_id, params, apiKey);
     return NextResponse.json(data);
   } catch (e:any) {
     return NextResponse.json({ error: e?.message || 'Failed to modify MF SIP' }, { status: 500 });
@@ -53,11 +68,16 @@ export async function PATCH(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   const accessToken = request.cookies.get('kite_access_token')?.value;
-  if (!accessToken) return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  const apiKey = request.cookies.get('kite_api_key')?.value;
+  
+  if (!accessToken || !apiKey) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+  
   try {
     const sipId = request.nextUrl.searchParams.get('sip_id') || '';
     if (!sipId) return NextResponse.json({ error: 'sip_id required' }, { status: 400 });
-    const data = await cancelMFSIP(accessToken, sipId);
+    const data = await cancelMFSIP(accessToken, sipId, apiKey);
     return NextResponse.json(data);
   } catch (e:any) {
     return NextResponse.json({ error: e?.message || 'Failed to cancel MF SIP' }, { status: 500 });

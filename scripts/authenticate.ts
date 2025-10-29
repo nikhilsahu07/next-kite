@@ -15,9 +15,9 @@ import * as readline from 'readline';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const apiKey = process.env.KITE_API_KEY || 'h4wkw57p0r9qppx2';
-const apiSecret = process.env.KITE_API_SECRET || 'ioc97qnesxr8u9psjfd4jcsgb19mag15';
-const redirectUrl = process.env.KITE_REDIRECT_URL || 'http://127.0.0.1:3000/api/auth/callback';
+const apiKey = process.env.KITE_API_KEY || 'your_api_key';
+const apiSecret = process.env.KITE_API_SECRET || 'your_api_secret';
+const redirectUrl = process.env.KITE_REDIRECT_URL || 'http://your-redirect-url:Port/kite-callback';
 
 const kc = new KiteConnect({ api_key: apiKey });
 
@@ -36,7 +36,7 @@ async function authenticate() {
   console.log('\nStep 2: Login with your Zerodha credentials');
   console.log('Step 3: After login, you will be redirected to a URL');
   console.log('Step 4: Copy the "request_token" from the redirected URL\n');
-  console.log('Example URL: http://127.0.0.1:3000/...?request_token=ABC123&action=login');
+  console.log('Example URL: http://localhost:3000/kite-callback?request_token=ABC123&action=login');
   console.log('Copy only the token part: ABC123\n');
 
   rl.question('Enter the request_token: ', async (requestToken) => {

@@ -1,31 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateSession } from '@/lib/kite-service';
+
+/**
+ * Legacy Auth Callback Route
+ * 
+ * This route is no longer used in the new multi-account system.
+ * The new system uses /kite-callback (client-side) which handles callbacks
+ * in the browser and communicates with the parent window.
+ * 
+ * This route is kept for backward compatibility but redirects to kite-accounts.
+ */
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const requestToken = searchParams.get('request_token');
   const status = searchParams.get('status');
 
+  console.warn('⚠️ Legacy callback route called. Use /kite-callback instead.');
+
   if (status === 'error' || !requestToken) {
-    return NextResponse.redirect(new URL('/?error=auth_failed', request.url));
+    return NextResponse.redirect(new URL('/kite-accounts?error=auth_failed', request.url));
   }
 
-  try {
-    const session = await generateSession(requestToken);
-    
-    // In a production app, you should store this securely (e.g., in a session cookie or database)
-    const response = NextResponse.redirect(new URL('/dashboard', request.url));
-    response.cookies.set('kite_access_token', session.access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24, // 24 hours
-    });
-    
-    return response;
-  } catch (error) {
-    console.error('Error generating session:', error);
-    return NextResponse.redirect(new URL('/?error=session_failed', request.url));
-  }
+  // Redirect to kite-accounts page with instructions
+  return NextResponse.redirect(
+    new URL(
+      '/kite-accounts?message=Please use the "Get Access Token" button to authenticate',
+      request.url
+    )
+  );
 }
 

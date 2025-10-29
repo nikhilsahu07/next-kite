@@ -21,12 +21,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Convert instrument tokens to instrument keys (exchange:token format)
-    const instrumentKeys = instruments.map((token: number) => {
+    const instrumentKeys = instruments.map((instrumentToken: number) => {
       // For now, assuming NSE exchange - in production, you'd want to store exchange info
-      return `NSE:${token}`;
+      return `NSE:${instrumentToken}`;
     });
 
-    const quoteData = await getQuote(token, instrumentKeys);
+    // Updated to match new function signature: getQuote(instruments, accessToken)
+    const quoteData = await getQuote(instrumentKeys, token);
     return NextResponse.json(quoteData);
   } catch (error) {
     console.error('Error fetching quote data:', error);

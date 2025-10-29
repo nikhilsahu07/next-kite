@@ -18,7 +18,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const data = await getHistoricalData(accessToken, token, interval, from, to, continuous, oi);
+    // Updated to match new function signature: instrumentToken, interval, from, to, continuous, oi, accessToken
+    const data = await getHistoricalData(token, interval, from, to, continuous, oi, accessToken);
     return NextResponse.json(data);
   } catch (e:any) {
     console.error('Historical error:', e);

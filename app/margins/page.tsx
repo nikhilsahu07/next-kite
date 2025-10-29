@@ -15,6 +15,37 @@ interface OrderInput {
   trigger_price: number;
 }
 
+// Icons as SVG components
+const CalculatorIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+  </svg>
+);
+
+const BasketIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+  </svg>
+);
+
+const DocumentIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>
+);
+
+const PlusIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+  </svg>
+);
+
+const TrashIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+  </svg>
+);
+
 export default function MarginsPage() {
   const [orders, setOrders] = useState<OrderInput[]>([{
     exchange: 'NSE',
@@ -94,55 +125,75 @@ export default function MarginsPage() {
     <MainLayout>
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             Margin & Charges Calculator
           </h1>
-          <p className="text-slate-600 dark:text-slate-400">
+          <p className="text-gray-600 dark:text-gray-400">
             Calculate margins and charges for your orders before placing them
           </p>
         </div>
 
         {/* Calculation Type Selector */}
         <div className="mb-6 flex gap-3">
-          {['orders', 'basket', 'charges'].map((type) => (
-            <button
-              key={type}
-              onClick={() => setCalculationType(type as any)}
-              className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                calculationType === type
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/50'
-                  : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-400'
-              }`}
-            >
-              {type === 'orders' && '📊 Order Margins'}
-              {type === 'basket' && '🧺 Basket Margins'}
-              {type === 'charges' && '💰 Contract Note'}
-            </button>
-          ))}
+          <button
+            onClick={() => setCalculationType('orders')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
+              calculationType === 'orders'
+                ? 'bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-gray-400'
+            }`}
+          >
+            <CalculatorIcon />
+            Order Margins
+          </button>
+          <button
+            onClick={() => setCalculationType('basket')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
+              calculationType === 'basket'
+                ? 'bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-gray-400'
+            }`}
+          >
+            <BasketIcon />
+            Basket Margins
+          </button>
+          <button
+            onClick={() => setCalculationType('charges')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
+              calculationType === 'charges'
+                ? 'bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-gray-400'
+            }`}
+          >
+            <DocumentIcon />
+            Contract Note
+          </button>
         </div>
 
         {/* Orders Input */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 mb-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-white">Orders</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Orders</h2>
             <button
               onClick={addOrder}
-              className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:shadow-lg transition-all"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-medium hover:opacity-90 transition-all"
             >
-              + Add Order
+              <PlusIcon />
+              Add Order
             </button>
           </div>
 
           <div className="space-y-4">
             {orders.map((order, idx) => (
-              <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+              <div key={idx} className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="font-semibold text-slate-700 dark:text-slate-300">Order #{idx + 1}</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Order #{idx + 1}</h3>
                   {orders.length > 1 && (
                     <button
                       onClick={() => removeOrder(idx)}
-                      className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg text-sm hover:bg-red-200 dark:hover:bg-red-900/50 transition"
+                      className="flex items-center gap-1 px-3 py-1 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-sm transition"
                     >
+                      <TrashIcon />
                       Remove
                     </button>
                   )}
@@ -150,11 +201,11 @@ export default function MarginsPage() {
                 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Exchange</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Exchange</label>
                     <select
                       value={order.exchange}
                       onChange={(e) => updateOrder(idx, 'exchange', e.target.value)}
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100"
                     >
                       <option>NSE</option>
                       <option>BSE</option>
@@ -164,22 +215,22 @@ export default function MarginsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Symbol</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Symbol</label>
                     <input
                       type="text"
                       value={order.tradingsymbol}
                       onChange={(e) => updateOrder(idx, 'tradingsymbol', e.target.value)}
                       placeholder="e.g. SBIN"
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Type</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type</label>
                     <select
                       value={order.transaction_type}
                       onChange={(e) => updateOrder(idx, 'transaction_type', e.target.value)}
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100"
                     >
                       <option>BUY</option>
                       <option>SELL</option>
@@ -187,11 +238,11 @@ export default function MarginsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Product</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Product</label>
                     <select
                       value={order.product}
                       onChange={(e) => updateOrder(idx, 'product', e.target.value)}
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100"
                     >
                       <option>CNC</option>
                       <option>MIS</option>
@@ -200,11 +251,11 @@ export default function MarginsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Order Type</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Order Type</label>
                     <select
                       value={order.order_type}
                       onChange={(e) => updateOrder(idx, 'order_type', e.target.value)}
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100"
                     >
                       <option>MARKET</option>
                       <option>LIMIT</option>
@@ -212,32 +263,32 @@ export default function MarginsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Quantity</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Quantity</label>
                     <input
                       type="number"
                       value={order.quantity}
                       onChange={(e) => updateOrder(idx, 'quantity', parseInt(e.target.value) || 0)}
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Price</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Price</label>
                     <input
                       type="number"
                       value={order.price}
                       onChange={(e) => updateOrder(idx, 'price', parseFloat(e.target.value) || 0)}
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Trigger Price</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Trigger Price</label>
                     <input
                       type="number"
                       value={order.trigger_price}
                       onChange={(e) => updateOrder(idx, 'trigger_price', parseFloat(e.target.value) || 0)}
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-white"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100"
                     />
                   </div>
                 </div>
@@ -248,9 +299,9 @@ export default function MarginsPage() {
           <button
             onClick={calculate}
             disabled={loading || orders.some(o => !o.tradingsymbol)}
-            className="mt-6 w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-6 w-full py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-semibold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Calculating...' : '🔮 Calculate'}
+            {loading ? 'Calculating...' : 'Calculate Margins'}
           </button>
 
           {error && (
@@ -262,30 +313,30 @@ export default function MarginsPage() {
 
         {/* Results */}
         {result && result.data && (
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6">
-            <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">📊 Results</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">Results</h2>
             
             {calculationType === 'basket' && result.data.final && (
               <div className="grid md:grid-cols-2 gap-6 mb-6">
-                <div className="p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
-                  <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-4">Initial Margins</h3>
+                <div className="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Initial Margins</h3>
                   <div className="space-y-2 text-sm">
-                    <div className="flex justify-between"><span>SPAN:</span><span className="font-medium">₹{result.data.initial.span?.toFixed(2)}</span></div>
-                    <div className="flex justify-between"><span>Exposure:</span><span className="font-medium">₹{result.data.initial.exposure?.toFixed(2)}</span></div>
-                    <div className="flex justify-between"><span>Premium:</span><span className="font-medium">₹{result.data.initial.option_premium?.toFixed(2)}</span></div>
-                    <div className="flex justify-between pt-2 border-t border-blue-300 dark:border-blue-700 font-bold text-base">
-                      <span>Total:</span><span className="text-blue-600 dark:text-blue-400">₹{result.data.initial.total?.toFixed(2)}</span>
+                    <div className="flex justify-between"><span className="text-gray-600 dark:text-gray-400">SPAN:</span><span className="font-medium">₹{result.data.initial.span?.toFixed(2)}</span></div>
+                    <div className="flex justify-between"><span className="text-gray-600 dark:text-gray-400">Exposure:</span><span className="font-medium">₹{result.data.initial.exposure?.toFixed(2)}</span></div>
+                    <div className="flex justify-between"><span className="text-gray-600 dark:text-gray-400">Premium:</span><span className="font-medium">₹{result.data.initial.option_premium?.toFixed(2)}</span></div>
+                    <div className="flex justify-between pt-2 border-t border-gray-300 dark:border-gray-700 font-bold text-base">
+                      <span>Total:</span><span className="text-gray-900 dark:text-gray-100">₹{result.data.initial.total?.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
                 
-                <div className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-800">
-                  <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-4">Final Margins (After Spread)</h3>
+                <div className="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Final Margins (After Spread)</h3>
                   <div className="space-y-2 text-sm">
-                    <div className="flex justify-between"><span>SPAN:</span><span className="font-medium">₹{result.data.final.span?.toFixed(2)}</span></div>
-                    <div className="flex justify-between"><span>Exposure:</span><span className="font-medium">₹{result.data.final.exposure?.toFixed(2)}</span></div>
-                    <div className="flex justify-between"><span>Premium:</span><span className="font-medium">₹{result.data.final.option_premium?.toFixed(2)}</span></div>
-                    <div className="flex justify-between pt-2 border-t border-green-300 dark:border-green-700 font-bold text-base">
+                    <div className="flex justify-between"><span className="text-gray-600 dark:text-gray-400">SPAN:</span><span className="font-medium">₹{result.data.final.span?.toFixed(2)}</span></div>
+                    <div className="flex justify-between"><span className="text-gray-600 dark:text-gray-400">Exposure:</span><span className="font-medium">₹{result.data.final.exposure?.toFixed(2)}</span></div>
+                    <div className="flex justify-between"><span className="text-gray-600 dark:text-gray-400">Premium:</span><span className="font-medium">₹{result.data.final.option_premium?.toFixed(2)}</span></div>
+                    <div className="flex justify-between pt-2 border-t border-gray-300 dark:border-gray-700 font-bold text-base">
                       <span>Total:</span><span className="text-green-600 dark:text-green-400">₹{result.data.final.total?.toFixed(2)}</span>
                     </div>
                   </div>
@@ -296,46 +347,46 @@ export default function MarginsPage() {
             {/* Individual Orders */}
             <div className="space-y-4">
               {(Array.isArray(result.data) ? result.data : result.data.orders || []).map((item: any, idx: number) => (
-                <div key={idx} className="p-6 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                <div key={idx} className="p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="text-lg font-bold text-slate-800 dark:text-white">{item.tradingsymbol}</h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">{item.exchange} • {item.transaction_type} • {item.product}</p>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{item.tradingsymbol}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{item.exchange} • {item.transaction_type} • {item.product}</p>
                     </div>
                     {item.total !== undefined && (
                       <div className="text-right">
-                        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">₹{item.total?.toFixed(2)}</div>
-                        <div className="text-xs text-slate-500">Required Margin</div>
+                        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">₹{item.total?.toFixed(2)}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Required Margin</div>
                       </div>
                     )}
                   </div>
 
                   {item.charges && (
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                       <div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">STT/CTT</div>
-                        <div className="font-medium">₹{item.charges.transaction_tax?.toFixed(2)}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">STT/CTT</div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">₹{item.charges.transaction_tax?.toFixed(2)}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">Exchange Charges</div>
-                        <div className="font-medium">₹{item.charges.exchange_turnover_charge?.toFixed(2)}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Exchange Charges</div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">₹{item.charges.exchange_turnover_charge?.toFixed(2)}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">SEBI Charges</div>
-                        <div className="font-medium">₹{item.charges.sebi_turnover_charge?.toFixed(2)}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">SEBI Charges</div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">₹{item.charges.sebi_turnover_charge?.toFixed(2)}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">GST</div>
-                        <div className="font-medium">₹{item.charges.gst?.total?.toFixed(2)}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">GST</div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">₹{item.charges.gst?.total?.toFixed(2)}</div>
                       </div>
                       {item.charges.brokerage > 0 && (
                         <div>
-                          <div className="text-xs text-slate-500 dark:text-slate-400">Brokerage</div>
-                          <div className="font-medium">₹{item.charges.brokerage?.toFixed(2)}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">Brokerage</div>
+                          <div className="font-medium text-gray-900 dark:text-gray-100">₹{item.charges.brokerage?.toFixed(2)}</div>
                         </div>
                       )}
                       <div className="md:col-span-2">
-                        <div className="text-xs text-slate-500 dark:text-slate-400">Total Charges</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Total Charges</div>
                         <div className="font-bold text-lg text-red-600 dark:text-red-400">₹{item.charges.total?.toFixed(2)}</div>
                       </div>
                     </div>
@@ -344,20 +395,20 @@ export default function MarginsPage() {
                   {item.span !== undefined && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                       <div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">SPAN</div>
-                        <div className="font-medium">₹{item.span?.toFixed(2)}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">SPAN</div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">₹{item.span?.toFixed(2)}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">Exposure</div>
-                        <div className="font-medium">₹{item.exposure?.toFixed(2)}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Exposure</div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">₹{item.exposure?.toFixed(2)}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">Premium</div>
-                        <div className="font-medium">₹{item.option_premium?.toFixed(2)}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Premium</div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">₹{item.option_premium?.toFixed(2)}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">Leverage</div>
-                        <div className="font-medium">{item.leverage}x</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Leverage</div>
+                        <div className="font-medium text-gray-900 dark:text-gray-100">{item.leverage}x</div>
                       </div>
                     </div>
                   )}

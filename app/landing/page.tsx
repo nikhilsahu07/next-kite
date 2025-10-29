@@ -120,7 +120,7 @@ export default function LandingPage() {
             <div className="flex items-center space-x-2">
               <TrendingUp className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                KiteTrader
+                Nidhi Nivesh
               </span>
             </div>
 
@@ -145,7 +145,7 @@ export default function LandingPage() {
               </Link>
               <ThemeToggle />
               <Link
-                href="/dashboard"
+                href="/kite-accounts"
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
               >
                 Get Started
@@ -184,7 +184,7 @@ export default function LandingPage() {
                 Pricing
               </Link>
               <Link
-                href="/dashboard"
+                href="/kite-accounts"
                 className="block px-4 py-2 bg-blue-600 text-white rounded-lg text-center"
               >
                 Get Started
@@ -228,7 +228,7 @@ export default function LandingPage() {
 
               <div className="hero-buttons flex flex-wrap gap-4">
                 <Link
-                  href="/dashboard"
+                  href="/kite-accounts"
                   className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors inline-flex items-center space-x-2"
                 >
                   <span>Start Trading</span>
@@ -534,12 +534,12 @@ export default function LandingPage() {
                 Ready to Start Trading?
               </h2>
               <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-                Join thousands of traders who trust KiteTrader for their daily trading
+                Join thousands of traders who trust Nidhi Nivesh for their daily trading
                 needs.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  href="/dashboard"
+                  href="/kite-accounts"
                   className="px-8 py-4 bg-white hover:bg-gray-100 text-blue-600 rounded-lg font-medium transition-colors inline-flex items-center space-x-2"
                 >
                   <span>Get Started Free</span>
@@ -564,7 +564,7 @@ export default function LandingPage() {
               <div className="flex items-center space-x-2 mb-4">
                 <TrendingUp className="w-6 h-6 text-blue-600" />
                 <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                  KiteTrader
+                  Nidhi Nivesh
                 </span>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -643,7 +643,7 @@ export default function LandingPage() {
           </div>
 
           <div className="border-t border-gray-200 dark:border-gray-800 pt-8 text-center text-sm text-gray-600 dark:text-gray-400">
-            <p>© 2024 KiteTrader. All rights reserved.</p>
+            <p>© 2024 Nidhi Nivesh. All rights reserved.</p>
           </div>
         </div>
       </footer>

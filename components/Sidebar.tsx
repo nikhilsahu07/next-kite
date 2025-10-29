@@ -78,7 +78,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
               >
                 <Sparkles className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                  KiteTrader
+                  Nidhi Nivesh
                 </h1>
               </motion.div>
             )}

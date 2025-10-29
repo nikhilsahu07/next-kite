@@ -8,12 +8,13 @@ const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 export async function GET(request: NextRequest) {
   const accessToken = request.cookies.get('kite_access_token')?.value;
+  const apiKey = request.cookies.get('kite_api_key')?.value;
   const searchParams = request.nextUrl.searchParams;
   const q = (searchParams.get('q') || '').trim().toUpperCase();
   const exchange = (searchParams.get('exchange') || '').toUpperCase(); // e.g., NSE, BSE, NFO, CDS
   const limit = Number(searchParams.get('limit') || '15');
 
-  if (!accessToken) {
+  if (!accessToken || !apiKey) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
@@ -26,7 +27,7 @@ export async function GET(request: NextRequest) {
       const all: any[] = [];
       for (const ex of exchangesToFetch) {
         try {
-          const list = await getInstruments(accessToken, ex);
+          const list = await getInstruments(ex, accessToken, apiKey);
           if (Array.isArray(list)) all.push(...list);
         } catch (e) {
           // ignore per-exchange errors to still return what we have

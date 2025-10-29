@@ -1,16 +1,21 @@
 import { NextResponse } from 'next/server';
-import { getLoginURL } from '@/lib/kite-service';
+
+/**
+ * Legacy Login Route
+ * 
+ * This route is no longer used in the new multi-account system.
+ * The new system generates login URLs per-account in the kite-accounts page.
+ * 
+ * This route is kept for backward compatibility.
+ */
 
 export async function GET() {
-  try {
-    const loginUrl = getLoginURL();
-    return NextResponse.json({ url: loginUrl });
-  } catch (error) {
-    console.error('Error generating login URL:', error);
-    return NextResponse.json(
-      { error: 'Failed to generate login URL' },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(
+    { 
+      error: 'This endpoint is deprecated. Please use /kite-accounts to manage accounts and generate login URLs.',
+      message: 'Visit /kite-accounts to add and authenticate your trading accounts.'
+    },
+    { status: 410 } // 410 Gone - indicates the resource is no longer available
+  );
 }
 

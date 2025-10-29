@@ -20,15 +20,16 @@ export async function GET(request: NextRequest) {
 
   try {
     let data;
+    // Updated to match new function signatures: instruments first, accessToken last
     switch (type) {
       case 'ltp':
-        data = await getLTP(accessToken, instruments);
+        data = await getLTP(instruments, accessToken);
         break;
       case 'ohlc':
-        data = await getOHLC(accessToken, instruments);
+        data = await getOHLC(instruments, accessToken);
         break;
       default:
-        data = await getQuote(accessToken, instruments);
+        data = await getQuote(instruments, accessToken);
     }
     return NextResponse.json(data);
   } catch (error) {
