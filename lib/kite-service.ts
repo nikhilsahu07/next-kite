@@ -165,27 +165,18 @@ export async function getTrades(accessToken?: string) {
 }
 
 // Market Data
-export async function getQuote(instruments: string[], accessToken?: string) {
-  const kite = await getKiteInstance();
-  if (accessToken) {
-    kite.setAccessToken(accessToken);
-  }
+export async function getQuote(instruments: string[], accessToken?: string, apiKey?: string) {
+  const kite = await getKiteInstance(accessToken, apiKey);
   return await kite.getQuote(instruments);
 }
 
-export async function getOHLC(instruments: string[], accessToken?: string) {
-  const kite = await getKiteInstance();
-  if (accessToken) {
-    kite.setAccessToken(accessToken);
-  }
+export async function getOHLC(instruments: string[], accessToken?: string, apiKey?: string) {
+  const kite = await getKiteInstance(accessToken, apiKey);
   return await kite.getOHLC(instruments);
 }
 
-export async function getLTP(instruments: string[], accessToken?: string) {
-  const kite = await getKiteInstance();
-  if (accessToken) {
-    kite.setAccessToken(accessToken);
-  }
+export async function getLTP(instruments: string[], accessToken?: string, apiKey?: string) {
+  const kite = await getKiteInstance(accessToken, apiKey);
   return await kite.getLTP(instruments);
 }
 

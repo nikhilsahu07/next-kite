@@ -35,10 +35,13 @@ export default function LiveCandlesCard({ symbol, height = 380, interval = '1min
 
       // Fetch last ~2 days of 5-minute candles using server API if available.
       // Fallback: derive instrument token via /api/instruments/search
-      const search = await fetch(`/api/instruments/search?query=${encodeURIComponent(title)}`);
+      const search = await fetch(`/api/instruments/search?q=${encodeURIComponent(title)}`);
       const searchJson = await search.json();
       const match = Array.isArray(searchJson) ? searchJson.find((i: any) => `${i.exchange}:${i.tradingsymbol}` === symbol) : null;
-      if (!match) throw new Error('Instrument not found');
+      if (!match) {
+        console.error(`Instrument not found for symbol: ${symbol}, title: ${title}`);
+        throw new Error('Instrument not found');
+      }
 
       const token = match.instrument_token;
       const to = new Date();

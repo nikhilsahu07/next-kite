@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import MainLayout from '@/components/MainLayout';
-import DepthChart from '@/components/charts/DepthChart';
+import FinancialDepthChart from '@/components/charts/FinancialDepthChart';
 import Sparkline from '@/components/charts/Sparkline';
 import LiveCandlesCard from '@/components/charts/LiveCandlesCard';
 
 export default function LivePage() {
   const [quotes, setQuotes] = useState<any>({});
   const [loading, setLoading] = useState(false);
+  const [depthData, setDepthData] = useState<{ bids: any[]; asks: any[] }>({
+    bids: [],
+    asks: [],
+  });
 
   const instruments = ['NSE:RELIANCE', 'NSE:HDFCBANK', 'NSE:INFY'];
 
@@ -17,7 +21,39 @@ export default function LivePage() {
       setLoading(true);
       const params = new URLSearchParams({ type: 'quote', instruments: instruments.join(',') });
       const res = await fetch(`/api/quotes?${params.toString()}`);
-      if (res.ok) setQuotes(await res.json());
+      if (res.ok) {
+        const data = await res.json();
+        setQuotes(data);
+        
+        // Extract depth data from the first instrument's quote
+        const firstInstrument = instruments[0];
+        const quote = data[firstInstrument];
+        if (quote?.depth) {
+          const bids = quote.depth.buy || [];
+          const asks = quote.depth.sell || [];
+          setDepthData({ bids, asks });
+        } else {
+          // Use sample data if no depth available
+          setDepthData({
+            bids: [
+              { price: 2500, quantity: 100 },
+              { price: 2495, quantity: 250 },
+              { price: 2490, quantity: 180 },
+              { price: 2485, quantity: 320 },
+              { price: 2480, quantity: 150 },
+            ],
+            asks: [
+              { price: 2510, quantity: 120 },
+              { price: 2515, quantity: 200 },
+              { price: 2520, quantity: 150 },
+              { price: 2525, quantity: 280 },
+              { price: 2530, quantity: 190 },
+            ],
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching quotes:', error);
     } finally {
       setLoading(false);
     }
@@ -32,7 +68,7 @@ export default function LivePage() {
   return (
     <MainLayout>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Live Market</h1>
+        <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Live Market</h1>
 
         <div className="grid md:grid-cols-3 gap-4">
           {instruments.map((sym) => {
@@ -42,11 +78,11 @@ export default function LivePage() {
               { x: 1, y: q.last_price },
             ] : []);
             return (
-              <div key={sym} className="border rounded p-4">
+              <div key={sym} className="border border-black/10 dark:border-white/10 rounded-lg p-4 bg-white dark:bg-black">
                 <div className="flex justify-between items-center mb-2">
-                  <div className="font-semibold">{sym}</div>
+                  <div className="font-semibold text-gray-900 dark:text-gray-100">{sym}</div>
                   <div className="text-right">
-                    <div className="text-lg font-bold">₹{Number(q.last_price || 0).toFixed(2)}</div>
+                    <div className="text-lg font-bold text-gray-900 dark:text-gray-100">₹{Number(q.last_price || 0).toFixed(2)}</div>
                     {q.ohlc && (
                       <div className="text-xs text-black/60 dark:text-white/60">Prev Close: ₹{Number(q.ohlc.close || 0).toFixed(2)}</div>
                     )}
@@ -62,8 +98,8 @@ export default function LivePage() {
         </div>
 
         <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-3">Depth</h2>
-          <DepthChart bids={[{ price: 2500, quantity: 100 }, { price: 2495, quantity: 250 }]} asks={[{ price: 2510, quantity: 120 }, { price: 2515, quantity: 200 }]} />
+          <h2 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">Order Book Depth</h2>
+          <FinancialDepthChart bids={depthData.bids} asks={depthData.asks} height={300} />
         </div>
       </div>
     </MainLayout>
